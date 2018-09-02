@@ -172,14 +172,15 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
                 }
             }
         }
-
-
-        Log.d("클릭 가능 여부", btn_rec.isEnabled.toString())
     }
 
     override fun onResume() {
         Toast.makeText(applicationContext, pref.getString("time", "초기값"), Toast.LENGTH_LONG).show()
+
+        
         super.onResume()
     }
+
+
 }
 
