@@ -1,30 +1,22 @@
 package kr.co.inmagic.timer
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.os.SystemClock
 import android.support.v7.app.AppCompatActivity
-import android.view.View
-import android.widget.Button
 import android.widget.ScrollView
-import android.widget.TextView
 import co.kr.inmagic.timer.R
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.os.*
+import android.util.Log
 import android.widget.Toast
 
 
 class MainActivity : AppCompatActivity()/*Activity()*/ {
 
-
-    val color_start_button = Color.parseColor("#1F3421")
-    val color_stop_button = Color.parseColor("#391816")
-    val color_laptime_button = Color.parseColor("#391816")
+    val textcolor_start = Color.parseColor("#4abd36")
+    val textcolor_stop = Color.parseColor("#f63f35")
 
     var now: Long = 0
     var outTime: Long = 0
@@ -39,19 +31,23 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
     private var myBaseTime: Long = 0
     private var myPauseTime: Long = 0
 
+    private var setismagic = false
+
+    //    private val vibrator: Vibrator by lazy {
+//        getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+//    }
     var myTimer = object : Handler() {
         /**
         이거스은 재귀 함수. 반복문 없이 어떻게 시간이 흐르나 한참 못찾고 있었는데 재귀네... ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 에라이...
          */
         override fun handleMessage(msg: Message) {
             time_out.text = timeOut
-
-
-            //sendEmptyMessage 는 비어있는 메세지를 Handler 에게 전송하는겁니다.
+            /**
+             * sendEmptyMessage 는 비어있는 메세지를 Handler 에게 전송하는겁니다.
+             */
             this.sendEmptyMessage(0)
         }
     }
-
 
     val timeOut: String
         get() {
@@ -63,17 +59,31 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
             return easy_outTime
         }
 
-    lateinit var pref : SharedPreferences
+    lateinit var pref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //btn_rec.background = resources.getDrawable(R.drawable.btn_rec_round)
+
         pref = getSharedPreferences("pref", Context.MODE_PRIVATE)
-        Toast.makeText(applicationContext, pref.getString("time", "초기값"), Toast.LENGTH_LONG).show()
 
+        layout_setismagic.setOnLongClickListener {
+            var a: String
+            if (setismagic) {
+                setismagic = false
+                a = "일반"
+                //vibrator.vibrate(500000)
+            } else {
+                setismagic = true
+                //vibrator.vibrate(100000)
+                a = "마술"
+            }
+            Toast.makeText(applicationContext, a, Toast.LENGTH_SHORT).show()
 
-
+            return@setOnLongClickListener true
+        }
 
         showDeveloperInfomation.setOnLongClickListener {
             startActivity(Intent(this, Developer_Inform::class.java))
@@ -81,8 +91,12 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
             return@setOnLongClickListener true
         }
 
+        btn_start.background = resources.getDrawable(R.drawable.btn_start_round_2)
+        btn_start.setTextColor(textcolor_start)
 
-       //시작버튼을 클릭했을때 현재 상태값에 따라 다른 동작을 할수있게끔 구현.
+        btn_rec.isEnabled = false
+
+        //시작버튼을 클릭했을때 현재 상태값에 따라 다른 동작을 할수있게끔 구현.
         btn_start.setOnClickListener {
             when (cur_Status) {
                 Init -> {
@@ -92,37 +106,53 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
                     myTimer.sendEmptyMessage(0)
                     btn_start.text = "중단" //버튼의 문자"시작"을 "중단"으로 변경
                     btn_rec.isEnabled = true //기록버튼 활성
+
                     cur_Status = Run //현재상태를 런상태로 변경
+
+                    btn_start.background = resources.getDrawable(R.drawable.btn_start_round_1)
+                    btn_start.setTextColor(textcolor_stop)
+
                 }
                 Run -> {
                     myTimer.removeMessages(0) //핸들러 메세지 제거
                     myPauseTime = SystemClock.elapsedRealtime()
                     btn_start.text = "시작"
-                    btn_start.setBackgroundColor(color_start_button)
+                    btn_start.setTextColor(textcolor_start)
+
+                    //btn_start.setBackgroundColor(color_start_button)
                     btn_rec.text = "재설정"
                     cur_Status = Pause
+                    btn_rec.isEnabled = true
+
+                    btn_start.background = resources.getDrawable(R.drawable.btn_start_round_2)
+
+                    if (setismagic) {
+                        time_out.text = pref.getString("time", timeOut)
+                    }
                 }
                 Pause -> {
                     val now = SystemClock.elapsedRealtime()
                     myTimer.sendEmptyMessage(0)
                     myBaseTime += now - myPauseTime
                     btn_start.text = "중단"
-                    btn_start.setBackgroundColor(color_stop_button)
+                    btn_start.setTextColor(textcolor_stop)
+
+                    btn_start.background = resources.getDrawable(R.drawable.btn_start_round_1)
+                    //btn_start.setBackgroundColor(color_stop_button)
                     btn_rec.text = "랩"
-                    btn_rec.setBackgroundColor(color_laptime_button)
+//                    btn_start.isEnabled = false
+//                    btn_rec.isEnabled = true
+
                     cur_Status = Run
                 }
             }
         }
 
-        btn_start.setBackgroundColor(color_start_button) // 초기
-        btn_start
-
         btn_rec.setOnClickListener {
             when (cur_Status) {
                 Run -> {
                     var str = record.text.toString()
-                    str += String.format("\n랩 %d. %s", myCount, timeOut)
+                    str += String.format("\n랩 %d : %s", myCount, timeOut)
                     record.text = str.trim()
                     scrollView.fullScroll(ScrollView.FOCUS_DOWN)
                     myCount++ //카운트 증가
@@ -142,6 +172,9 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
                 }
             }
         }
+
+
+        Log.d("클릭 가능 여부", btn_rec.isEnabled.toString())
     }
 
     override fun onResume() {

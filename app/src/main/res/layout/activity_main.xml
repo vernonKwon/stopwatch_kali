@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#000000"
-    android:id="@+id/showDeveloperInfomation">
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/showDeveloperInfomation"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:gravity="center">
@@ -17,8 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00.00"
-            android:textSize="90dp"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="90dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,7 +35,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_start_round_1"
                 android:text="시작" />
 
             <Button
@@ -43,15 +43,18 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_alignParentLeft="true"
-                android:background="@drawable/round_button"
-                android:text="랩" />
+                android:background="@drawable/btn_rec_round"
+                android:enabled="false"
+                android:text="랩"
+                android:textColor="#ffffff"/>
         </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:id="@+id/layout_setismagic">
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -68,8 +71,8 @@
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
                     android:padding="10dp"
-                    android:textSize="20sp"
-                    android:textColor="#ffffff"/>
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
             </RelativeLayout>
 
