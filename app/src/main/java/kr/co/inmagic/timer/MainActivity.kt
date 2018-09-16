@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.*
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.widget.Toast
 
@@ -33,9 +34,6 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
 
     private var setismagic = false
 
-    //    private val vibrator: Vibrator by lazy {
-//        getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-//    }
     var myTimer = object : Handler() {
         /**
         이거스은 재귀 함수. 반복문 없이 어떻게 시간이 흐르나 한참 못찾고 있었는데 재귀네... ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 에라이...
@@ -65,8 +63,6 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //btn_rec.background = resources.getDrawable(R.drawable.btn_rec_round)
-
         pref = getSharedPreferences("pref", Context.MODE_PRIVATE)
 
         layout_setismagic.setOnLongClickListener {
@@ -91,7 +87,7 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
             return@setOnLongClickListener true
         }
 
-        btn_start.background = resources.getDrawable(R.drawable.btn_start_round_2)
+        btn_start.background = ContextCompat.getDrawable(this,R.drawable.btn_start_round_2)
         btn_start.setTextColor(textcolor_start)
 
         btn_rec.isEnabled = false
@@ -109,9 +105,8 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
 
                     cur_Status = Run //현재상태를 런상태로 변경
 
-                    btn_start.background = resources.getDrawable(R.drawable.btn_start_round_1)
+                    btn_start.background = ContextCompat.getDrawable(this, R.drawable.btn_start_round_1)
                     btn_start.setTextColor(textcolor_stop)
-
                 }
                 Run -> {
                     myTimer.removeMessages(0) //핸들러 메세지 제거
@@ -124,7 +119,7 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
                     cur_Status = Pause
                     btn_rec.isEnabled = true
 
-                    btn_start.background = resources.getDrawable(R.drawable.btn_start_round_2)
+                    btn_start.background = ContextCompat.getDrawable(this, R.drawable.btn_start_round_2)
 
                     if (setismagic) {
                         time_out.text = pref.getString("time", timeOut)
@@ -137,11 +132,9 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
                     btn_start.text = "중단"
                     btn_start.setTextColor(textcolor_stop)
 
-                    btn_start.background = resources.getDrawable(R.drawable.btn_start_round_1)
-                    //btn_start.setBackgroundColor(color_stop_button)
+                    btn_start.background = ContextCompat.getDrawable(this, R.drawable.btn_start_round_1)
+
                     btn_rec.text = "랩"
-//                    btn_start.isEnabled = false
-//                    btn_rec.isEnabled = true
 
                     cur_Status = Run
                 }
@@ -174,13 +167,10 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
         }
     }
 
-    override fun onResume() {
+    /*override fun onResume() {
         Toast.makeText(applicationContext, pref.getString("time", "초기값"), Toast.LENGTH_LONG).show()
-
-        
         super.onResume()
-    }
-
+    }*/
 
 }
 
