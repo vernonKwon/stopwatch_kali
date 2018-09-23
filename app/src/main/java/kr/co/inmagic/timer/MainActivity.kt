@@ -12,6 +12,7 @@ import android.os.*
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.widget.Toast
+import android.os.CountDownTimer
 
 
 class MainActivity : AppCompatActivity()/*Activity()*/ {
@@ -76,7 +77,20 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
                 //vibrator.vibrate(100000)
                 a = "마술"
             }
-            Toast.makeText(applicationContext, a, Toast.LENGTH_SHORT).show()
+           var toast = Toast.makeText(applicationContext, a, Toast.LENGTH_SHORT)
+            //toast.show()
+
+            object : CountDownTimer(1001, 1000) {
+
+                override fun onTick(millisUntilFinished: Long) {
+                    toast.show()
+                }
+
+                override fun onFinish() {
+                    toast.cancel()
+                }
+
+            }.start()
 
             return@setOnLongClickListener true
         }
@@ -166,11 +180,6 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
             }
         }
     }
-
-    /*override fun onResume() {
-        Toast.makeText(applicationContext, pref.getString("time", "초기값"), Toast.LENGTH_LONG).show()
-        super.onResume()
-    }*/
 
 }
 

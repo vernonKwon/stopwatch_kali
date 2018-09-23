@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="kr.co.inmagic.timer.Developer_Inform">
+    tools:context="kr.co.inmagic.timer.Developer_Inform"
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +39,7 @@
                     android:id="@+id/editText_setTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="시간" />
+                    android:hint="텍스트를 설정하세요." />
             </android.support.design.widget.TextInputLayout>
 
             <Button

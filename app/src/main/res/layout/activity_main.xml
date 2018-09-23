@@ -32,16 +32,16 @@
 
             <Button
                 android:id="@+id/btn_start"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/btn_start_round_1"
                 android:text="시작" />
 
             <Button
                 android:id="@+id/btn_rec"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_alignParentLeft="true"
                 android:background="@drawable/btn_rec_round"
                 android:enabled="false"
