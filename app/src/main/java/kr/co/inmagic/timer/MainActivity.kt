@@ -10,12 +10,11 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.*
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.widget.Toast
 import android.os.CountDownTimer
 
 
-class MainActivity : AppCompatActivity()/*Activity()*/ {
+class MainActivity : AppCompatActivity() {
 
     val textcolor_start = Color.parseColor("#4abd36")
     val textcolor_stop = Color.parseColor("#f63f35")
@@ -59,6 +58,8 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
         }
 
     lateinit var pref: SharedPreferences
+    lateinit var a: String
+    lateinit var toast: Toast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
         pref = getSharedPreferences("pref", Context.MODE_PRIVATE)
 
         layout_setismagic.setOnLongClickListener {
-            var a: String
+
             if (setismagic) {
                 setismagic = false
                 a = "일반"
@@ -77,10 +78,9 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
                 //vibrator.vibrate(100000)
                 a = "마술"
             }
-           var toast = Toast.makeText(applicationContext, a, Toast.LENGTH_SHORT)
-            //toast.show()
+            toast = Toast.makeText(applicationContext, a, Toast.LENGTH_SHORT)
 
-            object : CountDownTimer(1001, 1000) {
+            object : CountDownTimer(500, 100) {
 
                 override fun onTick(millisUntilFinished: Long) {
                     toast.show()
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity()/*Activity()*/ {
             return@setOnLongClickListener true
         }
 
-        btn_start.background = ContextCompat.getDrawable(this,R.drawable.btn_start_round_2)
+        btn_start.background = ContextCompat.getDrawable(this, R.drawable.btn_start_round_2)
         btn_start.setTextColor(textcolor_start)
 
         btn_rec.isEnabled = false

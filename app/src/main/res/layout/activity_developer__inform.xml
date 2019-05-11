@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="개발자 : 권오철\n이메일 : kwondroid@daum.net\nThanks to 자바킹"
+                android:text="개발자 : 권오철\n이메일 : kwondroid@daum.net\n\n연출 문의 \n카카오톡 : KaliCerona\n\nThanks to 자바킹"
                 android:textSize="20dp" />
         </LinearLayout>
 
