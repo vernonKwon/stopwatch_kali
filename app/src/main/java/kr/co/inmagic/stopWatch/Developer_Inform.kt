@@ -1,4 +1,4 @@
-package kr.co.inmagic.timer
+package kr.co.inmagic.stopWatch
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.content.Context
 import android.widget.Toast
 import co.kr.inmagic.timer.R
-import co.kr.inmagic.timer.R.id.btn_Save_time
 import kotlinx.android.synthetic.main.activity_developer__inform.*
 
 

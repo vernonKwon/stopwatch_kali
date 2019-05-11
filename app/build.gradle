@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "co.kr.inmagic.timer"
+        applicationId "co.kr.inmagic.stopWatch"
         minSdkVersion 18
         targetSdkVersion 28
         versionCode 1

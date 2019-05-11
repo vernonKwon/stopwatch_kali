@@ -1,4 +1,4 @@
-package kr.co.inmagic.timer
+package kr.co.inmagic.stopWatch
 
 import org.junit.Test
 
